@@ -6,5 +6,11 @@
 </head>
 <body>
     <h1 th:text="${title}"></h1>
+<p th:unless="${cheeses} and ${cheeses.size()}">No cheese :(</p>
+
+<a href="/cheese/add">Add Cheese</a>
+<ul>
+    <li th:each="cheese : ${cheeses}" th:text="${cheese}"></li>
+</ul>
 </body>
 </html>
