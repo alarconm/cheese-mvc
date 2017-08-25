@@ -1,5 +1,6 @@
 package org.launchcode.cheesemvc.controllers;
 
+import com.sun.org.apache.regexp.internal.RE;
 import org.launchcode.cheesemvc.models.Cheese;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,5 +40,18 @@ public class CheeseController {
 
         // Redirect to /cheese
         return "redirect:";
+    }
+
+    @RequestMapping(value = "remove", method = RequestMethod.GET)
+    public String displayRemoveCheese(Model model) {
+        model.addAttribute("title", "Remove Cheese");
+        model.addAttribute("cheeses", cheeses);
+        return "cheese/remove";
+    }
+
+    @RequestMapping(value = "remove", method = RequestMethod.POST)
+    public String processRemoveCheeseForm(@RequestParam ArrayList<String> remove) {
+        return "redirect:";
+
     }
 }
