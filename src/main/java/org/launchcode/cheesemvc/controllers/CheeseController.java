@@ -1,6 +1,5 @@
 package org.launchcode.cheesemvc.controllers;
 
-import com.sun.org.apache.regexp.internal.RE;
 import org.launchcode.cheesemvc.models.Cheese;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,14 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
 
 @Controller
 @RequestMapping("cheese")
 public class CheeseController {
-
-    static ArrayList<Cheese> cheeses = new ArrayList<>();
 
     // Request path: /cheese
     @RequestMapping(value = "")
@@ -50,7 +45,9 @@ public class CheeseController {
     }
 
     @RequestMapping(value = "remove", method = RequestMethod.POST)
-    public String processRemoveCheeseForm(@RequestParam ArrayList<String> remove) {
+    public String processRemoveCheeseForm(@RequestParam ArrayList<String> cheese) {
+        // TODO: 8/27/2017 MAKE THIS WORK!!!! 
+
         return "redirect:";
 
     }

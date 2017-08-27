@@ -5,9 +5,18 @@ public class Cheese {
     private String name;
     private String description;
 
+    private int cheeseId;
+    private static int nextId = 1;
+
     public Cheese(String name, String description) {
+        this();
         this.name = name;
         this.description = description;
+    }
+
+    public Cheese() {
+        cheeseId = nextId;
+        nextId++;
     }
 
     public String getDescription() {
@@ -24,6 +33,22 @@ public class Cheese {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getCheeseId() {
+        return cheeseId;
+    }
+
+    public void setCheeseId(int cheeseId) {
+        this.cheeseId = cheeseId;
+    }
+
+    public static int getNextId() {
+        return nextId;
+    }
+
+    public static void setNextId(int nextId) {
+        Cheese.nextId = nextId;
     }
 
     @Override

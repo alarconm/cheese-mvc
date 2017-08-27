@@ -9,9 +9,11 @@
 
     <p th:unless="${cheeses} and ${cheeses.size()}">No cheese :(</p>
 
-    <ul th:each="cheese : ${cheeses}">
-        <li th:text="${cheese.getName() + ': ' + cheese.getDescription()}"></li>
-        <input type="checkbox" name="remove" value="${cheese.getName()}" />Remove
+    <ul th:each="cheese : ${cheeses}" class="checkbox">
+        <li>
+            <input type="checkbox" name="remove" th:value="${cheese.name}" th:id="${cheese.name}" />
+            <label th:for="${cheese.name}" th:text="${cheese.name}"></label>
+        </li>
     </ul>
 
     <input type="submit" value="Remove these cheeses" />
