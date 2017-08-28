@@ -3,12 +3,15 @@
 <head th:replace="fragments :: head"></head>
 <body class="container">
     <h1 th:text="${title}"></h1>
-    <nav th:replace="fragments :: navigation"></nav>
+    <nav th:replace="fragments :: navigation">
+    </nav>
 
     <p th:unless="${cheeses} and ${cheeses.size()}">No cheese :(</p>
-    <ul th:each="cheese : ${cheeses}">
-        <li th:text="${cheese.name + ': ' + cheese.description}"></li>
-    </ul>
+    <div th:each="cheese : ${cheeses}">
+        <span th:text="${cheese.name + ': ' + cheese.description}">
+        </span>
+        <a th:href="@{'/cheese/edit/' + ${cheese.cheeseId}}">edit</a>
+    </div>
 
 </body>
 </html>
