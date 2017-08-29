@@ -4,6 +4,8 @@ public class User {
 
     private String username;
     private String email;
+    private int userId;
+    private static int nextId = 1;
 
     public String getUsername() {
         return username;
@@ -31,8 +33,25 @@ public class User {
 
     private String password;
 
-    public User(){
+    public int getUserId() {
+        return userId;
+    }
 
+    private void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public static int getNextId() {
+        return nextId;
+    }
+
+    private static void setNextId(int nextId) {
+        User.nextId = nextId;
+    }
+
+    public User(){
+        userId = nextId;
+        nextId++;
     }
 
 }
