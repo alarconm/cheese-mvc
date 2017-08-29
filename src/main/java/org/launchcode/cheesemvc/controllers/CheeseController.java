@@ -68,11 +68,12 @@ public class CheeseController {
         return "cheese/edit";
     }
 
-    @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.POST)
-    public String processEditForm(@PathVariable int cheeseId, String name, String description) {
-        Cheese cheeseToModify = CheeseData.getById(cheeseId);
-        cheeseToModify.setName(name);
-        cheeseToModify.setDescription(description);
+    @RequestMapping(value = "edit", method = RequestMethod.POST)
+    public String processEditForm(int cheeseId, String name, String description) {
+        CheeseData.getById(cheeseId).setName(name);
+        CheeseData.getById(cheeseId).setDescription(description);
+
+        // TODO: 8/27/2017 PROBLEM IS HERE!
 
         return "redirect:";
     }
