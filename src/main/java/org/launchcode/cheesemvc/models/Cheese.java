@@ -13,6 +13,8 @@ public class Cheese {
     @Size(min=1, message = "Description must not be empty")
     private String description;
 
+    private CheeseTypes type;
+
     private int cheeseId;
     private static int nextId = 1;
 
@@ -62,5 +64,13 @@ public class Cheese {
     @Override
     public String toString() {
         return this.name + this.description;
+    }
+
+    public CheeseTypes getType() {
+        return type;
+    }
+
+    public void setType(CheeseTypes type) {
+        this.type = type;
     }
 }

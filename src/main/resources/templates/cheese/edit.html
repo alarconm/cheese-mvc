@@ -6,13 +6,25 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 
-<form method="post" action="/cheese/edit">
+<form method="post" action="/cheese/edit" th:object="${cheese}">
     <label th:for="name">Name:</label>
-    <input type="text" th:name="name" th:id="name" th:value="${cheese.name}" />
+    <input type="text" th:field="*{name}" />
+    <span th:errors="*{name}" class="error"></span>
+
     <label th:for="description">Description:</label>
-    <input type="text" th:name="description" th:id="description" th:value="${cheese.description}" />
+    <input type="text" th:field="*{description}" />
+    <span th:errors="*{name}" class="error"></span>
+
+    <div class="form-group">
+        <label th:for="type">Type</label>
+        <select th:field="*{type}">
+            <option th:each="cheeseType : ${cheeseTypes}" th:text="${cheeseType.name}"
+                    th:value="${cheeseType}"></option>
+        </select>
+    </div>
+
     <input type="submit" value="Edit Cheese" />
-    <input type="hidden" th:value="${cheese.cheeseId}" name="cheeseId" />
+    <input type="hidden" th:field="*{cheeseId}" />
 </form>
 </body>
 </html>
