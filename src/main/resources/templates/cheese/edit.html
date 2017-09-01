@@ -23,6 +23,14 @@
         </select>
     </div>
 
+    <div class="form-group">
+        <label th:for="rating">Rating</label>
+        <select th:field="*{rating}">
+            <option th:each="value : ${rating}" th:text="${value}"
+                    th:value="${value}"></option>
+        </select>
+    </div>
+
     <input type="submit" value="Edit Cheese" />
     <input type="hidden" th:field="*{cheeseId}" />
 </form>
