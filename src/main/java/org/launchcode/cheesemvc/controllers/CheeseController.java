@@ -79,11 +79,17 @@ public class CheeseController {
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.POST)
-    public String processEditForm(int cheeseId, String name, String description, CheeseTypes type, Errors errors, Model model) {
-//TODO Need to validate in this method -How do I do that??
+    public String processEditForm(int cheeseId, String name, String description, CheeseTypes type, @ModelAttribute @Valid Cheese newCheese, Errors errors, Model model) {
+
+        newCheese.setName(name);
+        newCheese.setType(type);
+        newCheese.setDescription(description);
+
         if (errors.hasErrors()) {
-            model.addAttribute("title", "Add Cheese");
-            return "cheese/add";
+            model.addAttribute("title", "Edit Cheese");
+            model.addAttribute("cheese", newCheese);
+            model.addAttribute("cheeseTypes", CheeseTypes.values());
+            return "cheese/edit";
         }
 
         CheeseData.getById(cheeseId).setName(name);
