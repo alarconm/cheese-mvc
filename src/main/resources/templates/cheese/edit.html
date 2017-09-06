@@ -24,11 +24,9 @@
     </div>
 
     <div class="form-group">
-        <label th:for="rating">Rating</label>
-        <select th:field="*{rating}">
-            <option th:each="value : ${rating}" th:text="${value}"
-                    th:value="${value}"></option>
-        </select>
+        <label th:for="rating">Rating(Between 1 and 5):</label>
+        <input th:field="*{rating}" value="*{rating}" />
+        <span th:errors="*{rating}" class="error"></span>
     </div>
 
     <input type="submit" value="Edit Cheese" />

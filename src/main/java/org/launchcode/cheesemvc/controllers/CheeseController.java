@@ -3,7 +3,6 @@ package org.launchcode.cheesemvc.controllers;
 import org.launchcode.cheesemvc.models.Cheese;
 import org.launchcode.cheesemvc.models.CheeseData;
 import org.launchcode.cheesemvc.models.CheeseTypes;
-import org.launchcode.cheesemvc.models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -29,7 +28,6 @@ public class CheeseController {
         model.addAttribute("title", "Add Cheese");
         model.addAttribute(new Cheese()); //Default attributes makes it all lower case of class IE: "cheese"
         model.addAttribute("cheeseTypes", CheeseTypes.values());
-        model.addAttribute(new User());
         return "cheese/add";
     }
 
@@ -46,6 +44,8 @@ public class CheeseController {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Cheese");
+            model.addAttribute("cheese", newCheese);
+            model.addAttribute("cheeseTypes", CheeseTypes.values());
             return "cheese/add";
         }
 
@@ -81,11 +81,8 @@ public class CheeseController {
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.POST)
-    public String processEditForm(int cheeseId, String name, String description, CheeseTypes type, @ModelAttribute @Valid Cheese newCheese, Errors errors, Model model) {
+    public String processEditForm( CheeseTypes type, @ModelAttribute @Valid Cheese newCheese, Errors errors, Model model) {
 
-        newCheese.setName(name);
-        newCheese.setType(type);
-        newCheese.setDescription(description);
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Edit Cheese");
@@ -94,9 +91,10 @@ public class CheeseController {
             return "cheese/edit";
         }
 
-        CheeseData.getById(cheeseId).setName(name);
-        CheeseData.getById(cheeseId).setType(type);
-        CheeseData.getById(cheeseId).setDescription(description);
+        CheeseData.getById(newCheese.getCheeseId()).setName(newCheese.getName());
+        CheeseData.getById(newCheese.getCheeseId()).setDescription(newCheese.getDescription());
+        CheeseData.getById(newCheese.getCheeseId()).setType(newCheese.getType());
+        CheeseData.getById(newCheese.getCheeseId()).setRating(newCheese.getRating());
 
         return "redirect:";
     }
