@@ -9,10 +9,10 @@
     <p th:unless="${cheeses} and ${cheeses.size()}">No cheese :(</p>
     <div th:each="cheese : ${cheeses}">
         <span th:text="${cheese.name + ': ' + cheese.description}"></span>
-        <span th:text="${cheese.type}"></span>
+        <span th:text="${cheese.category.name}"></span>
         <span th:text="'Rating' + ${cheese.rating}"></span>
 
-        <a th:href="@{'/cheese/edit/' + ${cheese.cheeseId}}">edit</a>
+        <a th:href="@{'/cheese/edit/' + ${cheese.id}}">edit</a>
     </div>
 
 </body>
