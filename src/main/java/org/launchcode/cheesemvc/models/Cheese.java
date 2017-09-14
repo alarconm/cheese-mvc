@@ -28,8 +28,6 @@ public class Cheese {
     @Range(min=1, max=5, message = "Please enter a rating between 1 and 5")
     private int rating;
 
-    private CheeseTypes type;
-
     @ManyToOne
     private Category category;
 
@@ -66,13 +64,6 @@ public class Cheese {
         return this.name + this.description;
     }
 
-    public CheeseTypes getType() {
-        return type;
-    }
-
-    public void setType(CheeseTypes type) {
-        this.type = type;
-    }
 
     public int getRating() {
         return rating;

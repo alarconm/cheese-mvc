@@ -1,7 +1,6 @@
 package org.launchcode.cheesemvc.controllers;
 
 import org.launchcode.cheesemvc.models.Cheese;
-import org.launchcode.cheesemvc.models.CheeseTypes;
 import org.launchcode.cheesemvc.models.Category;
 import org.launchcode.cheesemvc.models.data.CategoryDao;
 import org.launchcode.cheesemvc.models.data.CheeseDao;
@@ -29,6 +28,7 @@ public class CheeseController {
     public String index(Model model) {
 
         model.addAttribute("cheeses", cheeseDao.findAll());
+        model.addAttribute("categories", categorydao.findAll());
         model.addAttribute("title", "My Cheeses");
         return "cheese/index";
     }
@@ -84,13 +84,14 @@ public class CheeseController {
         return "redirect:";
     }
 
-    @RequestMapping(value = "category", method = RequestMethod.GET)
-    public String category(Model model, @RequestParam int id) {
+    @RequestMapping(value = "category/{categoryId}", method = RequestMethod.GET)
+    public String category(Model model, @PathVariable int categoryId) {
 
-        Category cat = categorydao.findOne(id);
+        Category cat = categorydao.findOne(categoryId);
         List<Cheese> cheeses = cat.getCheeses();
         model.addAttribute("cheeses", cheeses);
         model.addAttribute("title", "Cheeses in Category: " + cat.getName());
+        model.addAttribute("category", cat);
         return "cheese/index";
 
     }
@@ -98,25 +99,25 @@ public class CheeseController {
     @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.GET)
     public String displayEditForm(Model model, @PathVariable int cheeseId) {
         model.addAttribute("cheese", cheeseDao.findOne(cheeseId));
-        model.addAttribute("cheeseTypes", CheeseTypes.values());
+        model.addAttribute("categories", categorydao.findAll());
 
         return "cheese/edit";
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.POST)
-    public String processEditForm( CheeseTypes type, @ModelAttribute @Valid Cheese newCheese, Errors errors, Model model) {
+    public String processEditForm( Category category, @ModelAttribute @Valid Cheese newCheese, Errors errors, Model model) {
 
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Edit Cheese");
             model.addAttribute("cheese", newCheese);
-            model.addAttribute("cheeseTypes", CheeseTypes.values());
+            model.addAttribute("categories", categorydao.findAll());
             return "cheese/edit";
         }
 
         cheeseDao.findOne(newCheese.getId()).setName(newCheese.getName());
         cheeseDao.findOne(newCheese.getId()).setDescription(newCheese.getDescription());
-        cheeseDao.findOne(newCheese.getId()).setType(newCheese.getType());
+        cheeseDao.findOne(newCheese.getId()).setCategory(newCheese.getCategory());
         cheeseDao.findOne(newCheese.getId()).setRating(newCheese.getRating());
 
         return "redirect:";

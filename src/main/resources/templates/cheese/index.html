@@ -15,5 +15,12 @@
         <a th:href="@{'/cheese/edit/' + ${cheese.id}}">edit</a>
     </div>
 
+    <p th:unless="${categories} and ${categories.size()}">No Categories Created Yet</p>
+
+    <h3 th:if="${not #lists.isEmpty(categories)}">View Cheeses by category</h3>
+    <div class="form-group" th:each="category : ${categories}">
+        <a th:href="@{'/cheese/category/' + ${category.id}}" th:text="${category.name}"></a>
+    </div>
+
 </body>
 </html>
