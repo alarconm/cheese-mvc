@@ -2,12 +2,10 @@ package org.launchcode.cheesemvc.models;
 
 import org.hibernate.validator.constraints.Range;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 public class Cheese {
@@ -36,6 +34,9 @@ public class Cheese {
         this.description = description;
         this.rating = rating;
     }
+
+    @ManyToMany(mappedBy = "cheeses")
+    private List<Menu> menus;
 
     public Cheese() { }
 

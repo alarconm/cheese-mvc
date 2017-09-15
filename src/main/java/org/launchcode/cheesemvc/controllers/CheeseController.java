@@ -21,14 +21,14 @@ public class CheeseController {
     private CheeseDao cheeseDao;
 
     @Autowired
-    CategoryDao categorydao;
+    private CategoryDao categoryDao;
 
     // Request path: /cheese
     @RequestMapping(value = "")
     public String index(Model model) {
 
         model.addAttribute("cheeses", cheeseDao.findAll());
-        model.addAttribute("categories", categorydao.findAll());
+        model.addAttribute("categories", categoryDao.findAll());
         model.addAttribute("title", "My Cheeses");
         return "cheese/index";
     }
@@ -37,7 +37,7 @@ public class CheeseController {
     public String displayAddCheeseForm(Model model) {
         model.addAttribute("title", "Add Cheese");
         model.addAttribute(new Cheese()); //Default attributes makes it all lower case of class IE: "cheese"
-        model.addAttribute("categories", categorydao.findAll());
+        model.addAttribute("categories", categoryDao.findAll());
         return "cheese/add";
     }
 
@@ -55,11 +55,11 @@ public class CheeseController {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Cheese");
-            model.addAttribute("categories", categorydao.findAll());
+            model.addAttribute("categories", categoryDao.findAll());
             return "cheese/add";
         }
 
-        Category cat = categorydao.findOne(categoryId);
+        Category cat = categoryDao.findOne(categoryId);
         newCheese.setCategory(cat);
         cheeseDao.save(newCheese);
         // Redirect to /cheese
@@ -87,7 +87,7 @@ public class CheeseController {
     @RequestMapping(value = "category/{categoryId}", method = RequestMethod.GET)
     public String category(Model model, @PathVariable int categoryId) {
 
-        Category cat = categorydao.findOne(categoryId);
+        Category cat = categoryDao.findOne(categoryId);
         List<Cheese> cheeses = cat.getCheeses();
         model.addAttribute("cheeses", cheeses);
         model.addAttribute("title", "Cheeses in Category: " + cat.getName());
@@ -99,7 +99,7 @@ public class CheeseController {
     @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.GET)
     public String displayEditForm(Model model, @PathVariable int cheeseId) {
         model.addAttribute("cheese", cheeseDao.findOne(cheeseId));
-        model.addAttribute("categories", categorydao.findAll());
+        model.addAttribute("categories", categoryDao.findAll());
 
         return "cheese/edit";
     }
@@ -111,7 +111,7 @@ public class CheeseController {
         if (errors.hasErrors()) {
             model.addAttribute("title", "Edit Cheese");
             model.addAttribute("cheese", newCheese);
-            model.addAttribute("categories", categorydao.findAll());
+            model.addAttribute("categories", categoryDao.findAll());
             return "cheese/edit";
         }
 
@@ -119,6 +119,7 @@ public class CheeseController {
         cheeseDao.findOne(newCheese.getId()).setDescription(newCheese.getDescription());
         cheeseDao.findOne(newCheese.getId()).setCategory(newCheese.getCategory());
         cheeseDao.findOne(newCheese.getId()).setRating(newCheese.getRating());
+        cheeseDao.save(cheeseDao.findOne(newCheese.getId()));
 
         return "redirect:";
     }
