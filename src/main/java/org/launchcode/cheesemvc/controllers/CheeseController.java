@@ -2,8 +2,10 @@ package org.launchcode.cheesemvc.controllers;
 
 import org.launchcode.cheesemvc.models.Cheese;
 import org.launchcode.cheesemvc.models.Category;
+import org.launchcode.cheesemvc.models.Menu;
 import org.launchcode.cheesemvc.models.data.CategoryDao;
 import org.launchcode.cheesemvc.models.data.CheeseDao;
+import org.launchcode.cheesemvc.models.data.MenuDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +24,9 @@ public class CheeseController {
 
     @Autowired
     private CategoryDao categoryDao;
+
+    @Autowired
+    private MenuDao menuDao;
 
     // Request path: /cheese
     @RequestMapping(value = "")
@@ -77,7 +82,17 @@ public class CheeseController {
     @RequestMapping(value = "remove", method = RequestMethod.POST)
     public String processRemoveCheeseForm(@RequestParam int[] ids) {
 
+        for (int cheeseId : ids) {
+            Cheese cheese = cheeseDao.findOne(cheeseId);
+            List<Menu> menus = cheese.getMenus();
+
+            for (Menu menu : menus) {
+                menu.removeItem(cheese);
+            }
+        }
+
         for (int id : ids) {
+
             cheeseDao.delete(id);
         }
 
