@@ -7,20 +7,24 @@
 <nav th:replace="fragments :: navigation"></nav>
 
 <form method="post" action="/cheese/edit" th:object="${cheese}">
-    <label th:for="name">Name:</label>
-    <input type="text" th:field="*{name}" />
-    <span th:errors="*{name}" class="error"></span>
-
-    <label th:for="description">Description:</label>
-    <input type="text" th:field="*{description}" />
-    <span th:errors="*{description}" class="error"></span>
+    <div class="form-group">
+        <label th:for="name">Name:</label>
+        <input th:field="*{name}" />
+        <span th:errors="*{name}" class="error"></span>
+    </div>
 
     <div class="form-group">
-        <label th:for="category">Category</label>
-        <select th:field="*{category}">
-            <option th:each="cat : ${categories}"
-                    th:text="${cat.name}"
-                    th:value="${cat.id}"></option>
+        <label th:for="description">Description:</label>
+        <input th:field="*{description}" />
+    <span th:errors="*{description}" class="error"></span>
+    </div>
+
+    <div class="form-group">
+        <label th:for="categoryId">Category</label>
+        <select name="category">
+            <option th:each="category : ${categories}"
+                    th:text="${category.name}"
+                    th:value="${category.id}"></option>
         </select>
     </div>
 
@@ -30,9 +34,9 @@
         <span th:errors="*{rating}" class="error"></span>
     </div>
 
-    <input type="submit" value="Edit Cheese" />
     <input type="hidden" th:field="*{id}" />
-    <input type="hidden" th:field="*{menus}" />
+    <input type="submit" value="Edit Cheese" />
+
 </form>
 </body>
 </html>
