@@ -120,7 +120,7 @@ public class CheeseController {
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.POST)
-    public String processEditForm( Category category, @ModelAttribute @Valid Cheese newCheese, Errors errors, Model model) {
+    public String processEditForm( Model model, @ModelAttribute @Valid Cheese newCheese, Errors errors) {
 
 
         if (errors.hasErrors()) {
