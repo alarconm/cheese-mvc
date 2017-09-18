@@ -6,13 +6,20 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 
+<p th:unless="${categories} and ${categories.size()}">No Categories Yet</p>
+
+<div class="container-fluid">
+<table class="table">
+    <h3>Categories:</h3>
+    <tbody th:each="category : ${categories}">
+    <tr>
+        <th scope="row" th:text="${category.name}"></th>
+    </tr>
+    </tbody>
+</table>
+
 <a href="/category/add">Add Category</a>
 
-<p th:unless="${categories} and ${categories.size()}">No Categories Yet</p>
-<div th:each="category : ${categories}">
-    <span th:text="${'Category: ' + category.name}"></span>
-
-    <!--<a th:href="@{'/category/edit/' + ${category.id}}">edit</a>-->
 </div>
 
 </body>
