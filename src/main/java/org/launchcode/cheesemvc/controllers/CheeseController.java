@@ -120,8 +120,8 @@ public class CheeseController {
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.POST)
-    public String processEditForm( Model model, @ModelAttribute @Valid Cheese newCheese,
-                                   @RequestParam int categoryId, Errors errors) {
+    public String processEditForm( Model model,  @ModelAttribute @Valid Cheese newCheese,
+                                   @RequestParam int categoryId, @RequestParam int id, Errors errors) {
 
 
         if (errors.hasErrors()) {
@@ -131,11 +131,13 @@ public class CheeseController {
             return "cheese/edit";
         }
 
-        cheeseDao.findOne(newCheese.getId()).setName(newCheese.getName());
-        cheeseDao.findOne(newCheese.getId()).setDescription(newCheese.getDescription());
-        cheeseDao.findOne(newCheese.getId()).setCategory(newCheese.getCategory());
-        cheeseDao.findOne(newCheese.getId()).setRating(newCheese.getRating());
-        cheeseDao.save(cheeseDao.findOne(newCheese.getId()));
+        Cheese cheeseToUpdate = cheeseDao.findOne(id);
+
+        cheeseToUpdate.setCategory(categoryDao.findOne(categoryId));
+        cheeseToUpdate.setName(newCheese.getName());
+        cheeseToUpdate.setDescription(newCheese.getDescription());
+        cheeseToUpdate.setRating(newCheese.getRating());
+        cheeseDao.save(cheeseToUpdate);
 
         return "redirect:";
     }
