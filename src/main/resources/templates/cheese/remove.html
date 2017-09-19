@@ -9,13 +9,12 @@
 
     <p th:unless="${cheeses} and ${cheeses.size()}">No cheese :(</p>
 
-        <div  th:each="cheese : ${cheeses}" class="checkbox">
-            <input type="checkbox" name="ids" th:value="${cheese.id}" th:id="${cheese.id}" />
+        <div  class="form-check" th:each="cheese : ${cheeses}">
+            <input class="form-check-input" type="checkbox" name="ids" th:value="${cheese.id}" th:id="${cheese.id}" />
             <label th:for="${cheese.id}" th:text="${cheese.name}"></label>
         </div>
 
-
-    <input type="submit" value="Remove these cheeses" />
+    <button class="btn btn-default">Remove the selected cheese(s)</button>
 </form>
 </body>
 </html>

@@ -6,11 +6,15 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 
-<div  th:each="cheese : ${menu.cheeses}">
-    <ul >
-        <li th:text="${cheese.name}"></li>
-    </ul>
-</div>
+<table class="table">
+    <h3>Cheeses currently on this menu:</h3>
+    <tbody th:each="cheese : ${menu.cheeses}">
+    <tr>
+        <th scope="row" th:text="${cheese.name}"></th>
+    </tr>
+    </tbody>
+
+</table>
 
 <p><a th:href="'/menu/add-item/' + ${menu.id}">Add Cheese</a></p>
 
